@@ -129,9 +129,27 @@ const filterReducer = (state = filterReducerDefaultState, action) => {
   }
 }
 
+//  Get visible expenses
+const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
+  return expenses.filter((expense) => {
+    const startDateMatch = typeof startDate !== 'number' || expense.createdAt >= startDate
+    const endDateMatch = typeof endDate !== 'number' || expense.createdAt <= endDate
+    const textMatch = expense.description.toLowerCase().includes(text.toLowerCase())
+
+    return startDateMatch && endDateMatch && textMatch
+  }).sort((a, b) => {
+    if (sortBy === 'date') {
+      return a.createdAt < b.createdAt ? 1 : -1
+    } else 
+    if (sortBy === 'amount') {
+      return a.amount < b.amount ? 1 : -1
+    }
+    })
+  }
 
 
 
+// Store creation
 const store = createStore(
   combineReducers({
     expenses: expensesReducer,
@@ -140,27 +158,30 @@ const store = createStore(
 )
 
 store.subscribe(() => {
-  console.log(store.getState())
+  const state = store.getState()
+  const visibleExpenses = getVisibleExpenses(state.expenses, state.filters)
+  console.log(visibleExpenses)
 })
 
-const expenseOne = store.dispatch(addExpense({ description: 'rent', amount: 100 }))
-const expenseTwo = store.dispatch(addExpense({ description: 'cofee', amount: 400 }))
+const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 400, createdAt: 0 }))
+const expenseTwo = store.dispatch(addExpense({ description: 'cofee', amount: 200, createdAt: 0 }))
 
 // store.dispatch(removeExpense({ id: expenseOne.expense.id }))
 
 // store.dispatch(editExpense(expenseTwo.expense.id, { amount: 300 }))
-// store.dispatch(setTextFilter('rentd'))
+// store.dispatch(setTextFilter('f'))
 // store.dispatch(setTextFilter())
 
-// store.dispatch(sortByAmount())
+store.dispatch(sortByAmount())
 // store.dispatch(sortByDate())
 
 // store.dispatch(sortBy())
 // store.dispatch(sortByDate())
 
-store.dispatch(setStartDate(125))
-store.dispatch(setStartDate())
-store.dispatch(setEndDate(125))
+// store.dispatch(setStartDate(125))
+// store.dispatch(setStartDate())
+// store.dispatch(setEndDate(125))
+
 
 
 
@@ -185,4 +206,4 @@ const user = {
   date: 'dsdsdsa'
 }
 
-console.log(user)
+// console.log(user)
