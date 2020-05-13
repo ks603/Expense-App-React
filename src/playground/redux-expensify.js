@@ -63,14 +63,14 @@ const setEndDate = (endDate) => {
   }
 }
 
-
-const expensesReducerDefaultState = []
 const filterReducerDefaultState = {
   text: '', 
   sortBy: 'date', 
   startDate: undefined, 
   endDate: undefined
-}
+  }
+
+const expensesReducerDefaultState = []
 
 const expensesReducer = (state = expensesReducerDefaultState, action) => {
   switch (action.type) {
