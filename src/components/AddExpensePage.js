@@ -5,7 +5,11 @@ import Expenseform from './ExpenseForm'
 const AddExpensePage = () => (
   <div>
     <h1>Add Expense</h1>
-    <Expenseform />
+    <Expenseform 
+      onSubmit={(expense) => {
+        console.log(expense)
+      }}
+    />
   </div>
 );
 
