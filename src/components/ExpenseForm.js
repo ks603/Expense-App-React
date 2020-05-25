@@ -28,7 +28,7 @@ export default class ExpenseForm extends React.Component {
   onAmountChange = (e) => {
     const amount = e.target.value
     if (amount.match(/^\d*(\.\d{0,2})?$/)) {
-    this.setState(() => ({ amount }))
+      this.setState(() => ({ amount }))
     }
   }
   onDateChange = (createdAt) => {
@@ -41,7 +41,7 @@ export default class ExpenseForm extends React.Component {
   onSubmit = (e) => {
     e.preventDefault()
     if (!this.state.description || !this.state.amount) {
-      this.setState(() => ({ error: 'Please provide description and amount'}))
+      this.setState(() => ({ error: 'Please provide description and amount' }))
     } else {
       this.setState(() => {
         return {
@@ -50,7 +50,7 @@ export default class ExpenseForm extends React.Component {
       })
       this.props.onSubmit({
         description: this.state.description,
-        amount: parseFloat(this.state.amount, 10) *100,
+        amount: parseFloat(this.state.amount, 10) * 100,
         createdAt: this.state.createdAt.valueOf(),
         note: this.state.note
       })
@@ -59,14 +59,14 @@ export default class ExpenseForm extends React.Component {
   render() {
     return (
       <div>
-      {this.state.error && <p>{this.state.error}</p>}
+        {this.state.error && <p>{this.state.error}</p>}
         <form onSubmit={this.onSubmit}>
-          <input 
-          type="text"
-          placeholder="Description"
-          autoFocus
-          value={this.state.description}
-          onChange={this.onDescriptionChange}
+          <input
+            type="text"
+            placeholder="Description"
+            autoFocus
+            value={this.state.description}
+            onChange={this.onDescriptionChange}
           />
           <input
             type="text"
@@ -74,14 +74,14 @@ export default class ExpenseForm extends React.Component {
             value={this.state.amount}
             onChange={this.onAmountChange}
 
-            />
-          <SingleDatePicker 
-          date={this.state.createdAt}
-          onDateChange={this.onDateChange}
-          focused={this.state.calendarFocused}
-          onFocusChange={this.onFocusChange}
-          numberOfMonths={1}
-          isOutsideRange={() => false}
+          />
+          <SingleDatePicker
+            date={this.state.createdAt}
+            onDateChange={this.onDateChange}
+            focused={this.state.calendarFocused}
+            onFocusChange={this.onFocusChange}
+            numberOfMonths={1}
+            isOutsideRange={() => false}
           />
           <textarea
             type="text"
